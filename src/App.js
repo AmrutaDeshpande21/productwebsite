@@ -17,18 +17,35 @@ function App() {
   const { productItems } = Data
   const { shopItems } = Sdata
 
-  const [CartItem, setCartItem] = useState([]);
+  const [CartItem, setCartItem] = useState(
+    JSON.parse(localStorage.getItem('datakey')) || false
 
-   useEffect(() => {
-     localStorage.setItem('item',JSON.stringify(CartItem));
-   }, [CartItem] ); 
+  );
+
+   // To add the data in local sotrage
+
+useEffect(() => {
+  localStorage.setItem("datakey",JSON.stringify(CartItem));
+}, [CartItem] ); 
+
+
+
  
-    useEffect(() => {
-    const CartItem = JSON.parse(localStorage.getItem('CartItem'));
-      if(CartItem){
-     setCartItem(CartItem);
-      }
-      },[]);
+    // Can also be done using following method by importing 'use-local-storage-state'
+   /*  const [cart, setCart] = useLocalStorageState<CartProps>('cart', {})
+...
+...
+...
+
+const addToCart = (product: Product):void => {
+    product.quantity = 1
+
+    setCart((prevCart) => ({
+      ...prevCart,
+      [product.id]: product,
+    }))
+  } */
+
 
   const addToCart = (product) => {
     
